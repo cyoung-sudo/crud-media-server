@@ -7,16 +7,19 @@ import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
 
 passport.use(new LocalStrategy.Strategy((username, password, done) => {
-  console.log("test3")
+  // "Need to handle missing input field"
   User.findOne({ username: username })
     .then(doc => {
-      if(!doc) return done(null, false);
+      // User not found
+      if(!doc) return done(null, false, {message: "User not found"});
       bcrypt.compare(password, doc.password)
         .then(res => {
+          // Correct password
           if(res) {
             return done(null, doc);
+          // Incorrect password
           } else {
-            return done(null, false);
+            return done(null, false, {message: "Incorrect password"});
           }
         })
         .catch(err => console.log(err));

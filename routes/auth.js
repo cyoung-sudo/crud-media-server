@@ -14,15 +14,16 @@ userRoutes.post("/login", (req, res, next) => {
         success: false,
         message: info.message
       });
-    }
     // Successful login
-    req.login(user, err => {
-      if(err) next(err);
-      res.json({
-        success: true,
-        user
-      });
-    })
+    } else {
+      req.login(user, err => {
+        if(err) next(err);
+        res.json({
+          success: true,
+          user
+        });
+      })
+    }
   })(req, res, next);
 });
 
