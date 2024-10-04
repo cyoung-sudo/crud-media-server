@@ -1,11 +1,21 @@
 import express from "express";
 // Authentication
 import passport from "passport";
+// Middleware
+import { checkAuthenticated } from "../middleware/authMiddleware.js";
 
-const userRoutes = express.Router();
+const authRoutes = express.Router();
+
+// Return authenticated user
+authRoutes.get("/", checkAuthenticated, (req, res) => {
+  res.json({
+    success: true,
+    user: req.user
+  });
+});
 
 // Login user
-userRoutes.post("/login", (req, res, next) => {
+authRoutes.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if(err) next(err);
     // Failed login
@@ -27,4 +37,11 @@ userRoutes.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-export default userRoutes;
+authRoutes.delete('/logout', checkAuthenticated, (req, res, next) => {
+  req.logout(err => {
+    if(err) return next(err);
+    res.json({ success: true });
+  });
+});
+
+export default authRoutes;

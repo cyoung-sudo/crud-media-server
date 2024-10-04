@@ -4,7 +4,7 @@ export const checkAuthenticated = (req, res, next) => {
   } else {
     return res.json({
       success: false,
-      message: "Authentication failed"
+      message: "Invalid authentication"
     });
   }
 }

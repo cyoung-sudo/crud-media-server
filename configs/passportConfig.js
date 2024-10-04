@@ -7,7 +7,6 @@ import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
 
 passport.use(new LocalStrategy.Strategy((username, password, done) => {
-  // "Need to handle missing input field"
   User.findOne({ username: username })
     .then(doc => {
       // User not found
@@ -24,10 +23,7 @@ passport.use(new LocalStrategy.Strategy((username, password, done) => {
         })
         .catch(err => console.log(err));
     })
-    .catch(err => {
-      console.log(err);
-      return done(err);
-    });
+    .catch(err => done(err));
   }
 ));
 
@@ -36,7 +32,9 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id, (err, user) => {
-    done(err, user);
-  });
+  User.findById(id)
+    .then(doc => {
+      done(null, doc);
+    })
+    .catch(err => done(err));
 });
