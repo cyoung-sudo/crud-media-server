@@ -7,6 +7,17 @@ import User from "../models/userModel.js";
 const userRoutes = express.Router();
 
 userRoutes.route("/")
+//----- Retrieve users
+.get((req, res) => {
+  User.find({})
+  .then(docs => {
+    res.json({
+      success: true,
+      users: docs
+    });
+  })
+  .catch(err => console.log(err));
+})
 //----- Create user
 .post((req, res) => {
   // Encrypt password
