@@ -3,6 +3,9 @@ import express from "express";
 import bcrypt from "bcrypt";
 // Models
 import User from "../models/userModel.js";
+import Post from "../models/postModel.js";
+// Middleware
+import { checkAuthenticated } from "../middleware/authMiddleware.js";
 
 const userRoutes = express.Router();
 
@@ -63,6 +66,19 @@ userRoutes.route("/:userId")
         message: "User not found"
       });
     }
+  })
+  .catch(err => console.log(err));
+})
+// Delete user
+.delete(checkAuthenticated, (req, res) => {
+  Post.deleteMany({
+    userId: req.params.userId
+  })
+  .then(delCount => {
+    return User.findByIdAndDelete(req.params.userId);
+  })
+  .then(delDoc => {
+    res.json({ success: true });
   })
   .catch(err => console.log(err));
 });
