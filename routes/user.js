@@ -14,9 +14,10 @@ userRoutes.route("/")
 .get((req, res) => {
   User.find({})
   .then(docs => {
+    let revDocs = docs.reverse();
     res.json({
       success: true,
-      users: docs
+      users: revDocs
     });
   })
   .catch(err => console.log(err));

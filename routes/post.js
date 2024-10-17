@@ -11,9 +11,10 @@ postRoutes.route("/")
 .get((req, res) => {
   Post.find({})
   .then(docs => {
+    let revDocs = docs.reverse();
     res.json({
       success: true,
-      posts: docs
+      posts: revDocs
     });
   })
   .catch(err => console.log(err));
@@ -78,9 +79,10 @@ postRoutes.route("/user/:userId")
     userId: req.params.userId
   })
   .then(docs => {
+    let revDocs = docs.reverse();
     res.json({
       success: true,
-      posts: docs
+      posts: revDocs
     });
   })
   .catch(err => console.log(err));
