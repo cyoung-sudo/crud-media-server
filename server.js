@@ -15,12 +15,8 @@ const PORT = process.env.PORT || 5050;
 const app = express();
 
 //----- Middleware
-// app.use(cors({
-//   origin: process.env.CLIENT,
-//   credentials: true
-// }));
 app.use(cors({
-  origin: [process.env.CLIENT, "http://localhost:5173"],
+  origin: process.env.CLIENT,
   credentials: true
 }));
 app.use(express.json());
