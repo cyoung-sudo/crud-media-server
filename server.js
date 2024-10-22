@@ -33,6 +33,10 @@ app.use(passport.session());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
+// Initial server ping
+app.get("/api/ping", (req, res) => {
+  res.json({ success: true });
+})
 
 //----- Connection
 connectToDatabase()
