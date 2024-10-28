@@ -1,6 +1,6 @@
 <h1 align="center">CRUD Media (server)</h1>
 
-<p align="center">An simple app that allows users make an account & create posts. This repository is the server code.</p>
+<p align="center">A simple app that allows users make an account & create posts. This repository is the server code.</p>
 
 ## Links
 
