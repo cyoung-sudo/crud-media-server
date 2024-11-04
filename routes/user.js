@@ -4,8 +4,6 @@ import bcrypt from "bcrypt";
 // Models
 import User from "../models/userModel.js";
 import Post from "../models/postModel.js";
-// Middleware
-import { checkAuthenticated } from "../middleware/authMiddleware.js";
 
 const userRoutes = express.Router();
 
@@ -71,7 +69,7 @@ userRoutes.route("/:userId")
   .catch(err => console.log(err));
 })
 // Delete user
-.delete(checkAuthenticated, (req, res) => {
+.delete((req, res) => {
   Post.deleteMany({
     userId: req.params.userId
   })
